@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
-import {Button} from 'antd'
+import {Card} from 'antd'
+import './login.css'
+import logo from "../../assets/logo.png"
 class Login extends Component {
     render() {
         return (
-            <div>
-                login component
-                <Button type={"primary"}>我是一个按钮</Button>
+            <div className="login">
+                <Card className="login-container">
+                    <img src={logo} className="login-logo"/>
+
+                </Card>
             </div>
         );
     }
