@@ -1,16 +1,38 @@
-import React, {Component} from 'react';
-import {Card,Form,Input,Checkbox,Button} from 'antd'
+import React from 'react';
+import {useNavigate} from "react-router-dom";
+import {Card,Form,Input,Checkbox,Button,message} from 'antd'
 import './login.scss'
 import logo from "assets/logo.png"
-class Login extends Component {
-    render() {
+import {login} from "../../apis/user";
+
+const Login= ()=> {
+    const navigate=useNavigate()
+    const onFinish=async ({mobile,code})=>{
+        try{
+            const res=await login(mobile,code)
+            // console.log(res)
+            // 1.保存token
+            // console.log("保存成功")
+            localStorage.setItem('token',res.data.token)
+            // 2.跳转首页
+            // console.log(this.props)
+            // console.log("登陆成功")
+            navigate("/home")
+            // 3.提示成功
+            message.success("登陆成功！",1,function () {
+                console.log("消息关闭了！")
+            })
+        }catch(error) {
+            message.error(error.response.data.message,1)
+        }
+    }
         return (
             <div className="login">
                 <Card className="login-container">
                     <img alt="" src={logo} className="login-logo"/>
                     <Form size="large"
                           validateTrigger={['onChange','onBlur']}
-                          onFinish={this.onFinish}
+                          onFinish={onFinish}
                         initialValues={{
                             mobile:"13911111111",
                             code:"246810",
@@ -73,10 +95,6 @@ class Login extends Component {
                 </Card>
             </div>
         );
-    }
-    onFinish=(values)=>{
-        console.log(values)
-    }
 }
 
 export default Login;
