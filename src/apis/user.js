@@ -16,3 +16,9 @@ export const login=(mobile,code)=>{
         }
     })
 }
+export const getUserProfile=()=>{
+    return request({
+         method:"get",
+        url:"/user/profile"
+        })
+}

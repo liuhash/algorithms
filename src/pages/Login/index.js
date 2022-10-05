@@ -1,9 +1,10 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import {Card,Form,Input,Checkbox,Button,message} from 'antd'
-import './login.scss'
+import styles from './login.module.scss'
 import logo from "assets/logo.png"
 import {login} from "../../apis/user";
+import {setToken} from "../../utils/storage";
 
 const Login= ()=> {
     const navigate=useNavigate()
@@ -13,21 +14,23 @@ const Login= ()=> {
             // console.log(res)
             // 1.保存token
             // console.log("保存成功")
-            localStorage.setItem('token',res.data.token)
+            setToken(res.data.token)
             // 2.跳转首页
             // console.log(this.props)
             // console.log("登陆成功")
             navigate("/home")
             // 3.提示成功
             message.success("登陆成功！",1,function () {
-                console.log("消息关闭了！")
+                // console.log("消息关闭了！")
+                // console.log(getToken())
             })
         }catch(error) {
-            message.error(error.response.data.message,1)
+            console.log(error)
+            // message.error(error.response.data.message,1)
         }
     }
         return (
-            <div className="login">
+            <div className={styles.login}>
                 <Card className="login-container">
                     <img alt="" src={logo} className="login-logo"/>
                     <Form size="large"
