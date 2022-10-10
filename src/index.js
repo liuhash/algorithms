@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import 'antd/dist/antd.css'
 import './index.css';
 import App from './App';
-
-
+import {ConfigProvider} from 'antd'
+import 'moment/locale/zh-cn';
+import locale from 'antd/lib/locale/zh_CN'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <ConfigProvider locale={locale}>
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    </ConfigProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
