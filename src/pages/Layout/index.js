@@ -74,12 +74,7 @@ const LayoutComponent =()=>{
                                 <Menu.Item key="/home/publish" icon={<EditOutlined/>}><NavLink to="/home/publish"/>发布文章</Menu.Item>
                             </Menu>
                         </Sider>
-                        <Layout
-                            style={{
-                                padding: '0 24px 24px',
-                            }}
-                        >
-
+                        <Layout style={{padding: 24,overflow:"auto"}}>
                             <Content
                                 className="site-layout-background">
                                 <Routes>

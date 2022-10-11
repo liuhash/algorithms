@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {ArticleStatus} from "../../apis/constants";
 import {getChannels} from "../../apis/channels";
 import {getArticles} from "../../apis/article";
+import defaultImage from "assets/error.png"
 const {Option} =Select;
 const {RangePicker}=DatePicker
 
@@ -11,31 +12,38 @@ class ArticleList extends Component {
     columns=[
         {
             title:'封面',
-            dataIndex:'name',
+            dataIndex:'',
+            render(data){
+                if(data.cover.type===0)
+                {
+                    return <img src={defaultImage} style={{width:200,height:150,objectFit:'cover'}} alt=""/>
+                }
+                return <img src={data.cover.images[0]} style={{width:200,height:150,objectFit:'cover'}} alt=""/>
+            }
     },
         {
             title: '标题',
-            dataIndex: '',
+            dataIndex: 'title',
         },
         {
             title:'状态' ,
-            dataIndex: '',
+            dataIndex: 'status',
         },
         {
             title:'发布时间' ,
-            dataIndex: '',
+            dataIndex: 'pubdate',
         },
         {
             title: '阅读数',
-            dataIndex: '',
+            dataIndex: 'read_count',
         },
         {
             title:'评论数' ,
-            dataIndex: '',
+            dataIndex: 'comment_count',
         },
         {
             title:'点赞数' ,
-            dataIndex: '',
+            dataIndex: 'like_count',
         },
         {
             title:'操作' ,
@@ -47,6 +55,7 @@ class ArticleList extends Component {
         articles:{}
     }
     render() {
+        const {total_count,results}=this.state.articles
         return (
             <div>
                 <Card
@@ -95,8 +104,8 @@ class ArticleList extends Component {
                 </Form>
                 </Card>
 
-                <Card title="根据查询条件查询到***条结果:">
-                    <Table columns={this.columns} />;
+                <Card title={`根据查询条件查询到${total_count}条结果:`}>
+                    <Table columns={this.columns} dataSource={results} rowKey='id'/>;
                 </Card>
             </div>
         );
