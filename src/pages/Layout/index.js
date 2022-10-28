@@ -13,7 +13,6 @@ const LayoutComponent =()=>{
     const [info,setInfo]=useState({data:{name:"",}})
     const navigate=useNavigate()
     const location=useLocation()
-    // console.log(location)
     const onConfirm=async ()=>{
         // 移除Token
         removeToken()
@@ -35,6 +34,7 @@ const LayoutComponent =()=>{
         }
         asyncFn()
     },[setInfo,navigate])
+
         return (
             <div className={styles.layout}>
                 <Layout>
@@ -57,13 +57,12 @@ const LayoutComponent =()=>{
                                       </Popconfirm>
                         </span>
                         </div>
-                        {/*<Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />*/}
                     </Header>
                     <Layout>
                         <Sider width={200}>
                             <Menu
                                 mode="inline"
-                                defaultSelectedKeys={[location.pathname]}
+                                SelectedKeys={[location.pathname]}
                                 style={{
                                     height: '100%', borderRight: 0,
                                 }}
@@ -71,7 +70,7 @@ const LayoutComponent =()=>{
                             >
                                 <Menu.Item key="/home" icon={<HomeOutlined/>}><NavLink to="/home"/>数据概览</Menu.Item>
                                 <Menu.Item key="/home/list" icon={<DiffOutlined/>}><NavLink to="/home/list"/>内容管理</Menu.Item>
-                                <Menu.Item key="/home/publish" icon={<EditOutlined/>}><NavLink to="/home/publish"/>发布文章</Menu.Item>
+                                <Menu.Item key="/home/publish/:id" icon={<EditOutlined/>}><NavLink to="/home/publish"/>发布文章</Menu.Item>
                             </Menu>
                         </Sider>
                         <Layout style={{padding: 24,overflow:"auto"}}>
@@ -80,7 +79,8 @@ const LayoutComponent =()=>{
                                 <Routes>
                                     <Route path="*" element={<Home/>}/>
                                     <Route path="list" element={<ArticleList/>}/>
-                                    <Route path="publish" element={<ArticlePublish/>}/>
+                                    <Route path="publish" element={<ArticlePublish/>} />
+                                    <Route path={"publish/:id"} element={<ArticlePublish/>}/>
                                 </Routes>
                             </Content>
                         </Layout>

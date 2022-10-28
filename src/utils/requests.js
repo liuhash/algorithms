@@ -1,8 +1,9 @@
 import axios from 'axios'
 import {message} from "antd";
 import {getToken, hasToken, removeToken} from 'utils/storage'
+export const baseURL="http://geek.itheima.net/v1_0/"
 const instance=axios.create({
-    baseURL:"http://geek.itheima.net/v1_0/",
+    baseURL,
     timeout:5000,
 })
 // 配置拦截器
@@ -28,10 +29,14 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+    // 确保有response
+    if(!error.response){
+        return Promise.reject(new Error('网络繁忙，请稍后再试！'))
+    }
     if(error.response.status===401)
     {
         removeToken()
-        window.location.href="http://localhost:3000/login"
+        window.location.href="http://127.0.0.1:3000/login"
         message.warning("登陆信息过期！")
     }
     console.log(error)
